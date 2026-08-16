@@ -6,9 +6,9 @@
 
 **Team:** Group 57
 
-**Project Repository:** [Insert GitHub Repository URL](https://github.com/MrKubayi-Tech/Group_57.git)
+**Project Repository:** [GitHub Repository URL](https://github.com/MrKubayi-Tech/Group_57.git)
 
-**Project Board:** [Insert Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
+**Project Board:** [Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
 
 ### Project Overview
 
@@ -187,7 +187,7 @@ Every task must contain:
 
 ### Public Jira Board
 
-**Jira Board:** [Insert Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
+**Jira Board:** [Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
 
 ---
 
@@ -405,7 +405,7 @@ The team recognizes that successful completion of the Northstar Support Deflecti
 ---
 
 ### Repository Links
-* **GitHub Repository:** [Insert Repository URL](https://github.com/MrKubayi-Tech/Group_57.git)
-* **Jira Project Board:** [Insert Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
+* **GitHub Repository:** [Github Repository URL](https://github.com/MrKubayi-Tech/Group_57.git)
+* **Jira Project Board:** [Public Jira Board URL](https://ndirangudenise.atlassian.net/jira/software/projects/G5/boards/2?filter=&groupBy=none)
 * **Team Communication:** WhatsApp
 * **Team Meetings:** Google Meet – Tuesdays and Thursdays at 8:00 PM EAT
