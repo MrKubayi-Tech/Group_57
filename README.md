@@ -27,3 +27,7 @@ This project is an **E-Commerce Web Application** designed and developed as part
 - **Database:** MariaDB / MySQL
 - **Version Control:** Git & GitHub
 
+## Set up instructions
+cd Group_57
+npm install
+npm run dev    
