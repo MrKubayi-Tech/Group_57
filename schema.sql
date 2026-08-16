@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS customers (
 );
 
 CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     category TEXT,
     description TEXT,
@@ -18,8 +18,9 @@ CREATE TABLE IF NOT EXISTS inventory (
     product_id INTEGER NOT NULL,
     size TEXT NOT NULL,
     stock_quantity INTEGER DEFAULT 0,
+    stock_status TEXT NOT NULL DEFAULT 'In Stock',
     location TEXT,
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -29,26 +30,38 @@ CREATE TABLE IF NOT EXISTS orders (
     status TEXT NOT NULL,
     carrier TEXT,
     estimated_delivery TEXT,
+    eta TEXT,
     latest_update TEXT,
+    note TEXT,
     FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
--- NEW JUNCTION TABLE FOR PRODUCT-BASED TRACKING
 CREATE TABLE IF NOT EXISTS order_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id TEXT NOT NULL,
     product_id INTEGER NOT NULL,
     quantity INTEGER DEFAULT 1,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 CREATE TABLE IF NOT EXISTS tickets (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticket_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    received_at TEXT,
+    raw_text TEXT,
+    -- message TEXT,
+    tag TEXT,
+    confidence REAL,
+    order_id TEXT,
+    product_id INTEGER,
+    resolution_text TEXT,
+    outcome TEXT,
     customer_id INTEGER,
     subject TEXT,
-    message TEXT NOT NULL,
+    message TEXT,
     status TEXT DEFAULT 'Open',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES customers(id)
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );

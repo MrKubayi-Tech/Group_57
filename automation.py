@@ -172,12 +172,20 @@ def classify(conn, text):
 # ---------------------------------------------------------------
 def build_reply(result):
     if result["tag"] == "order":
-        o = result["order"]
-        carrier_part = f" with {o['carrier']}" if o["carrier"] else ""
+        o = dict(result["order"]) if result.get("order") else {}
+
+        status = o.get("status", "in progress")
+        carrier = o.get("carrier")
+        carrier_part = f" with {carrier}" if carrier else ""
+
+        note = f" {o['note']}" if o.get("note") else ""
+        eta = f" Estimated: {o['eta']}." if o.get("eta") else ""
+
         return (
-            f"Hi! Order {result['order_id']} is currently {o['status']}{carrier_part}. "
-            f"{o['note']} Estimated: {o['eta']}."
+            f"Hi! Order {result['order_id']} is currently {status}{carrier_part}."
+            f"{note}{eta}"
         )
+
     if result["tag"] == "stock":
         name = result["product"]["name"]
         if result["size_match"]:
@@ -185,6 +193,7 @@ def build_reply(result):
             return f"The {name} in size {result['size_match'].upper()}: {status}."
         lines = " · ".join(f"{s.upper()}: {v}" for s, v in result["sizes"].items())
         return f"Here's current availability for the {name} — {lines}. Let us know which size you need and we'll confirm."
+
     return f"This one's been routed to a human agent — {result['reason']}"
 
 
@@ -198,11 +207,12 @@ def process_ticket(text):
     outcome = "escalated" if result["tag"] == "escalate" else "auto_resolved"
 
     conn.execute(
-        """INSERT INTO tickets
-           (received_at, raw_text, tag, confidence, order_id, product_id, resolution_text, outcome)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT INTO tickets (
+           received_at, raw_text, message, tag, confidence, order_id, product_id, resolution_text, outcome
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            text,
             text,
             result["tag"],
             round(result["confidence"], 2),
